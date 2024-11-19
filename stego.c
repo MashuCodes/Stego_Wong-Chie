@@ -4,3 +4,8 @@ int parse_header(FILE *fp)
 {
     
 }
+
+void write_hidden_byte(char c, FILE *fp)
+{
+    
+}
