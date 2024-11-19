@@ -7,7 +7,7 @@
 // Function to parse header, checks and returns 1 if header begins with "P6\0" and returns 0 if otherwise
 int parse_header(FILE *);
 
-// Function to read the original file, and write the hidden byte onto the output file
+// Function to write the byte c to the stream referenced by fp
 void write_hidden_byte(char, FILE *);
 
 // Function to read and return length of the hidden message
