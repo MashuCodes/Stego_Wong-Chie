@@ -9,3 +9,9 @@ int parse_header(FILE *);
 
 // Function to read the original file, and write the hidden byte onto the output file
 void write_hidden_byte(FILE *, FILE *, char);
+
+// Function to read and return length of the hidden message
+unsigned int read_length(FILE *);
+
+// Function to read a byte and returns it as a single character
+unsigned int read_byte(FILE *);
