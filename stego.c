@@ -1,6 +1,6 @@
 //stego.c contains the implementation of functions common to both programs// code here
 
-#include <stego.h>
+#include "stego.h"
 
 int validate_arguments(int argument_count, char **argument_values, int required_arguments, int file_index)
 {
@@ -37,4 +37,43 @@ void write_hidden_byte(char c, FILE *fp)
         ungetc(0,fp);
         putc((byte & ~0x01) | ((c >> i) & 0x01), fp);
     }
+}
+
+int readHeader(struct ppm *pi, FILE *fp)
+{
+    int c;
+    int *pm;
+
+    for (int i = 0; !isspace(c = getc(fp)) && i < 2; ++i) {
+        pi->magic_number[i] = c;
+    }
+    pi->magic_number[2] = '\0';
+
+    if ((c = getc(fp)) == '#') {
+        // comment processing
+        pi->comments[0] = c;
+        pi->comments[1] = '\0';
+        // skip all comments
+        while ((c = getc(fp)) != '\n')
+            ;
+    }
+    else {
+        // no commment
+        ungetc(c, fp);
+    }
+
+    pi->width = pi->height = pi->Maxval = 0;
+    pm = &pi->width;
+    for (int i = 0; i < 3; i++) {
+        while (!isspace(c = getc(fp))) {
+            if (!isdigit(c)) {
+                printf("corrupted format\n");
+                return -1;
+            }
+            *pm = *pm * 10 + (c - '0');
+        }
+        ++pm;
+    }
+
+    return 0;
 }
