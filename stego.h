@@ -42,5 +42,6 @@ unsigned int read_length(FILE *);
 // Function to read a byte and returns it as a single character
 unsigned int read_byte(FILE *);
 
-// Function that parses and validates the header before processing the rest of the PPM file by checking for P6
+// Function to read and parse the PPM header (magic number, comments, width, height, max value)
+// Returns 0 on success, -1 if there is an error in the format
 int readHeader(struct ppm *pi, FILE *fp);
