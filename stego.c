@@ -20,7 +20,7 @@ int validate_arguments(int argument_count, char **argument_values, int required_
     }
 
     // If no errors, return success
-    return FILE_OPEN_FAIL;
+    return FILE_OPEN_SUCCESS;
 }
 
 int parse_header(FILE *fp)
