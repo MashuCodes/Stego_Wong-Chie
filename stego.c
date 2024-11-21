@@ -65,7 +65,7 @@ unsigned int read_length(FILE *fp)
             printf("Error while reading length. \n");
             exit(1);
         }
-        length = length * 2 + (pixel & 1);
+        length = (length << 1) | (pixel & 1);
     }
 
     return length;
