@@ -6,7 +6,7 @@
 int main(int argc, char **argv)
 {
     unsigned int status = 0;
-    int length = 0;
+    unsigned int length = 0;
 
     // Validate command-line arguments using validate_arguments function
     if ((status = validate_arguments(argc, argv, 2, 1)) == FILE_OPEN_FAIL) 
