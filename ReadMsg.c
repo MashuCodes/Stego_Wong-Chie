@@ -1,5 +1,6 @@
 // code here
 #include "stego.c"
+#include "stego.h"
 
 
 int main(int argc, char **argv)
