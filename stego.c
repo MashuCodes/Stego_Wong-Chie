@@ -92,3 +92,18 @@ int readHeader(struct ppm *pi, FILE *fp)
 
     return 0;
 }
+unsigned int read_length(FILE *fp){
+    unsigned int length = 0;
+       for (int i = 0; i < 8; i++)
+       {
+           int pixel = fgetc(fp);
+           if (pixel == EOF)
+           {
+               printf("Error while reading length. \n");
+               exit(1);
+           }
+           length = length * 2 + (pixel & 1);
+       }
+
+       return length;
+   }
