@@ -71,7 +71,7 @@ unsigned int read_length(FILE *fp)
     return length;
 }
 
-unsigned int read_byte(FILE *fp)
+unsigned char read_byte(FILE *fp)
 {
     int i;
     unsigned char byte = 0;
