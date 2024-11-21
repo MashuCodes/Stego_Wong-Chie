@@ -54,7 +54,7 @@ void write_hidden_byte(char c, FILE *fp)
     }
 }
 
-unsigned char read_byte(FILE *fp)
+unsigned int read_byte(FILE *fp)
 {
     int i;
     unsigned char byte = 0;
