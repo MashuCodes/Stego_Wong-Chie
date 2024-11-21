@@ -54,6 +54,44 @@ void write_hidden_byte(char c, FILE *fp)
     }
 }
 
+unsigned char read_byte(FILE *fp)
+{
+    int i;
+    unsigned char byte = 0;
+
+    for (i = 0; i < 8; ++i) {
+        // Read the next bit from the file
+        int bit = fgetc(fp) & 0x01;  // Get the least significant bit
+
+        // Shift the current bits in byte to the left by 1 position
+        byte = (byte << 1) | bit;  // Append the bit to the byte
+    }
+
+    return byte;
+}
+
+char *read_hidden_msg(FILE *fp, int length) 
+{
+    // Allocate memory for the message (including space for null terminator)
+    char *message = malloc((length + 1) * sizeof(char));
+    if (message == NULL) 
+    {
+        perror("Memory allocation failed");
+        return NULL;
+    }
+
+    // Read the hidden message byte by byte
+    for (int index = 0; index < length; index++) 
+    {
+        message[index] = read_byte(fp);
+    }
+
+    // Null-terminate the string
+    message[length] = '\0';
+
+    return message;
+}
+
 int readHeader(struct ppm *pi, FILE *fp)
 {
     int c;
