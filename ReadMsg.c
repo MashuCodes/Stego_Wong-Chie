@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 
     FILE *fp = fopen(argv[1], "r");
 
-    if ((status=parse_header(fp)) == PARSE_HEADER_SUCCESS)
+    if ((status = parse_header(fp)) == PARSE_HEADER_SUCCESS)
     {
         length = read_length(fp);
         printf("length: %d\n", length);
