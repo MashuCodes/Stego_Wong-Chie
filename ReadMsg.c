@@ -19,7 +19,7 @@ int main(int argc, char **argv)
     // If validation is successful, print success message and exit
     printf("Command-line arguments validated successfully.\n");
 
-    FILE *fp = fopen(argv[1], "r");
+    FILE *fp = fopen(argv[1], "rb");
 
     if ((status = parse_header(fp)) == PARSE_HEADER_SUCCESS)
     {
