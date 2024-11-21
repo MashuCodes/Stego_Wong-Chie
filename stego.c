@@ -59,7 +59,8 @@ unsigned int read_byte(FILE *fp)
     int i;
     unsigned char byte = 0;
 
-    for (i = 0; i < 8; ++i) {
+    for (i = 0; i < 8; ++i) 
+    {
         // Read the next bit from the file
         int bit = fgetc(fp) & 0x01;  // Get the least significant bit
 
