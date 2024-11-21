@@ -26,6 +26,9 @@ int main(int argc, char **argv)
         length = read_length(fp);
         printf("length: %d\n", length);
     }
+    else {
+        printf("Error. \n");
+    }
 
     return EXIT_SUCCESS;  // Exit with success status
 }
