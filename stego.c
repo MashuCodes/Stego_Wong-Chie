@@ -25,7 +25,22 @@ int validate_arguments(int argument_count, char **argument_values, int required_
 
 int parse_header(FILE *fp)
 {
-    
+    int c;
+
+    // Loop to read the first two characters, checking for "P6"
+    for (int i = 0; !isspace(c = getc(fp)) && i < 2; ++i)
+     {
+        if (i == 0 && c != 'P') 
+        {  // Check the first character for 'P'
+            return 0;  // Not a valid header if it doesn't start with 'P'
+        }
+        if (i == 1 && c != '6') 
+        {  // Check the second character for '6'
+            return 0;  // Not a valid P6 format if the second character isn't '6'
+        }
+    }
+
+    return 1;  // Successfully read "P6" as the header
 }
 
 void write_hidden_byte(char c, FILE *fp) 
@@ -68,7 +83,7 @@ int readHeader(struct ppm *pi, FILE *fp)
         while (!isspace(c = getc(fp))) {
             if (!isdigit(c)) {
                 printf("corrupted format\n");
-                return -1;
+                return 1;
             }
             *pm = *pm * 10 + (c - '0');
         }
