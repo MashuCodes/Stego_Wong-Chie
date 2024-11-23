@@ -3,29 +3,19 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
-
-#define FILE_OPEN_SUCCESS 1
-#define FILE_OPEN_FAIL 0
-#define PARSE_HEADER_SUCCESS 1
-#define PARSE_HEADER_FAIL 0
-#define EXIT_SUCCESS 0
+#include <string.h>
 
 
-struct msg 
-{
-    char *data;  // Pointer to the hidden message
-    int length;  // Length of the hidden message
-};
+#define ERROR -1
+#define OK 0
 
-struct ppm 
+typedef struct
 {
     char magic_number[3];
-    char comments[2];
     int width;
     int height;
     int Maxval;
-    struct msg hidden_msg;
-};
+} ppm;
 
 // Function to validate command-line arguments and open the file
 int validate_arguments(int argument_count, char** argument_values, int required_arguments, int file_index);
