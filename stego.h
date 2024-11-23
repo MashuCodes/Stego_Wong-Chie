@@ -20,9 +20,6 @@ typedef struct
 // Function to validate command-line arguments and open the file
 int validate_arguments(int argument_count, char** argument_values, int required_arguments, int file_index);
 
-// Function to parse header, checks and returns 1 if header begins with "P6\0" and returns 0 if otherwise
-int parse_header(FILE *);
-
 // Function to write the byte c to the stream referenced by fp
 void write_hidden_byte(char, FILE *);
 
