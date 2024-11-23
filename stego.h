@@ -20,7 +20,7 @@ typedef struct
 // Function to validate command-line arguments and open the file
 int validate_arguments(int argument_count, char** argument_values, int required_arguments, int file_index);
 
-// Function to write the byte c to the stream referenced by fp
+// Function to write the byte c to the stream (dst) referenced by src
 int write_hidden_byte(FILE *src, FILE *dst, char c);
 
 // Function to read and return length of the hidden message
