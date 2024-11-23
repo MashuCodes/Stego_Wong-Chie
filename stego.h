@@ -21,7 +21,7 @@ typedef struct
 int validate_arguments(int argument_count, char** argument_values, int required_arguments, int file_index);
 
 // Function to write the byte c to the stream referenced by fp
-void write_hidden_byte(char, FILE *);
+int write_hidden_byte(FILE *src, FILE *dst, char c);
 
 // Function to read and return length of the hidden message
 unsigned int read_length(FILE *);
