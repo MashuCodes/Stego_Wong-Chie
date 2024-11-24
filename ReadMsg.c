@@ -28,7 +28,7 @@ int readMsg(int argc, char **argv)
         printf("Msg length: %d\n", length);
         if (length > 0)
         {
-            char message[length+1];
+            char message[length + 1];
             read_hidden_msg(fp, length, message);
             printf("Read Message: %s", message);
         }
