@@ -1,3 +1,5 @@
+// Stego_Wong-Chie
+
 #include "stego.h"
 
 int writeMsg(int argc, char **argv)
