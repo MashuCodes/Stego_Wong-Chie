@@ -1,3 +1,5 @@
+// Stego_Wong-Chie
+
 #include "stego.h"
 
 int main(int argc, char **argv)
