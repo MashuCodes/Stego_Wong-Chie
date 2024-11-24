@@ -1,5 +1,5 @@
-//stego.h contains declarations of constants, structs, functions, etc., common to both programs
-// Stego_Wong-Chie_Jokan
+// stego.h contains declarations of constants, structs, functions, etc., common to both programs
+// Stego_Wong-Chie_Joseph
 
 #include <stdio.h>
 #include <ctype.h>
