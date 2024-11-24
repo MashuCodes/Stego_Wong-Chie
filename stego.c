@@ -1,6 +1,4 @@
-// stego.c contains the implementation of functions common to both programs
-// Stego_Wong-Chie_Joseph
-
+// stego.c contains the implementation of functions common to both programs// code here
 #include "stego.h"
 
 int validate_arguments(int argument_count, char **argument_values, int required_arguments, int file_index)
@@ -45,7 +43,6 @@ int read_header(ppm *pi, FILE *fp)
         }
     }
 
-    printf("%s ", pi->magic_number);
     // Comment parsing, ignores comments including denotor '#'
     if ((c = getc(fp)) == '#')
     {
@@ -71,10 +68,8 @@ int read_header(ppm *pi, FILE *fp)
                 printf("corrupted format\n");
                 return ERROR;
             }
-            printf("%c", c);
             *pm = *pm * 10 + (c - '0'); // Moves up one decimal place (indicated by * 10) and adds the value of c(ASCII value) as a number
         }
-        printf(" ");
         ++pm;
     }
 
