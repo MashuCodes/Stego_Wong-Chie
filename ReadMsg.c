@@ -1,34 +1,45 @@
 // code here
-#include "stego.c"
 #include "stego.h"
 
-
-int main(int argc, char **argv)
+int readMsg(int argc, char **argv)
 {
-    unsigned int status = 0;
+    int status = 0;
     unsigned int length = 0;
 
     // Validate command-line arguments using validate_arguments function
-    if ((status = validate_arguments(argc, argv, 2, 1)) == FILE_OPEN_FAIL) 
+    if ((status = validate_arguments(argc, argv, 2, 1)) == ERROR)
     {
         // If file validation fails, print the error message and exit
         printf("Error: Invalid arguments or file not found\n");
-        return EXIT_FAILURE;  // Exit with failure status
+        return ERROR; // Exit with failure status
     }
 
-    // If validation is successful, print success message and exit
+    // If validation is successful, print success message
     printf("Command-line arguments validated successfully.\n");
 
     FILE *fp = fopen(argv[1], "rb");
+    ppm pi = {};
 
-    if ((status = parse_header(fp)) == PARSE_HEADER_SUCCESS)
+    if (!(status = read_header(&pi, fp)))
     {
-        length = read_length(fp);
-        printf("length: %d\n", length);
+        printf("Width:%d, Height:%d, MaxVal:%d\r\n", pi.width, pi.height, pi.Maxval);
+        length = read_msg_length(fp);
+        printf("Msg length: %d\n", length);
+        if (length > 0)
+        {
+            char message[length+1];
+            read_hidden_msg(fp, length, message);
+            printf("Read Message: %s", message);
+        }
     }
-    else {
+    else
+    {   
+        fclose(fp);
         printf("Error. \n");
+        return ERROR;
     }
 
-    return EXIT_SUCCESS;  // Exit with success status
+    fclose(fp);
+
+    return OK; // Exit with success status
 }
