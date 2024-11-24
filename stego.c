@@ -1,5 +1,5 @@
 // stego.c contains the implementation of functions common to both programs
-// Stego_Wong-Chie_Jokan
+// Stego_Wong-Chie_Joseph
 
 #include "stego.h"
 
