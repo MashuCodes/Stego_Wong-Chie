@@ -1,4 +1,4 @@
-// code here
+// Stego_Wong-Chie
 #include "stego.h"
 
 int readMsg(int argc, char **argv)
