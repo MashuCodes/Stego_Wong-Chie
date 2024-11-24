@@ -1,4 +1,4 @@
-// Stego_Wong-Chie_Jokan
+// Stego_Wong-Chie_Joseph
 
 #include "stego.h"
 
