@@ -1,6 +1,5 @@
 // Stego_Wong-Chie_Jokaan
 
-
 #include "stego.h"
 
 int main(int argc, char **argv)
