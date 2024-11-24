@@ -1,3 +1,37 @@
 # Steganography-
 
+This repository contains files for the "Steganography" lab in CST 2107. The program takes ppm files and allows the user to read and encrypt hidden messages within the pixels of the image through edits in the least significant bits. Limitations include: messages can not be any longer than 255 characters, pixels can not have an RGB value of more than 255, and images must be ppm files.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Usage Instructions: Run stego.exe. To use stego.exe to write, type ".\stego.exe" into terminal proceeded by the name of the ppm file to read. To write, proceed ".\stego.exe" with hidden message in quotes, then by name of the source file you want to copy, and end it with the new file to output to. The output will contain the size of the Width and Height of the image along with the maximum value of the RGB (255 for ppm files). Read will also contain the hidden message in the file.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Roadmap: (Steps indicate order of work was done)
 Step 1: We have to first make handle error checking for command-line arguments and file access when a program starts, this is to ensure that the program is being used correctly and that the specified file can be opened successfully before proceeding with other operations.
+
+Step 1.5: Initially we had a whole cast of different functions in the stego.h that was brainstormed and only written as a blueprints/ functions we thought we needed, and ultimately most of it was cut out or updated as we continued through the process of writing the program. Many of the functions that no longer exist are read functions that shared the same functionalities as some others such as reading the headers of the PPM files and checking the validity of the files.
+
+Step 2: Next we need to create a function that reads the header and checks for the characters 'P6\0' to ensure that the file being read is a PPM file. The function would also parse comments including the denotor '#', and gets the values of the width and height of the image along with the maximum value for R, G, and B respectively. The width and height tell us the size of the image and will also be used later on to get the number of bytes in the image as there are 3 bytes per pixel (represented by Red, Green, and Blue)
+
+Step 3: After reading the header of the PPM file, it was decided that it would be easier to read the given PPM file "TU_modified.ppm" first before working on the write functions as the file supposedly already contained the hidden message.
+
+Step 4(Beginning read functions): The read_msg_length function was the first step in our read functions, as it is essential to determine the exact length of the message we will be reading. This function takes a file pointer (FILE *fp) as input and reads the first 8 bits (1 byte) from the file, which represent the length of the message in binary format.
+
+To construct the length, we use binary arithmetic. The function reads each byte from the file and extracts the least significant bit (LSB) of each pixel value. It builds the message length by shifting the previously accumulated length to the left (multiplying by 2) and adding the new LSB. This process allows us ultimately receive the length of the hidden message.
+
+In the event that an EOF is encountered while reading, the function reports an error and sets the length to -1, indicating that the length could not be determined. Knowing the length of the message is crucial for our subsequent reading functions, as it allows us to allocate the appropriate amount of memory and ensure we read the correct amount of data from the file.
+
+Step 5: Next, we worked on the read_hidden_byte function which is responsible for extracting a single byte from a file where the message has been hidden using the least significant bits of pixel values. This function reads 8 bits (1 byte) from the file, and for each bit, it shifts the current byte left by one position and appends the new bit using a bitwise OR operation. The result is a complete byte that is returned to the caller.
+
+Step 6 (Ending read functions): The read_hidden_msg function reads an entire hidden message from the file, byte by byte. It takes the length of the message as input and uses a loop to call read_hidden_byte for each byte. The bytes are stored in a character array, and once all bytes are read, the function appends a null terminator to the end of the string. This ensures the message is properly formatted as a C-style string for further processing.
+
+Step 7 (Begining write functions): The write_hidden_byte function encodes a character (char c) into the least significant bits of pixel values in a source file (src) and writes the modified pixels to a destination file (dst). The function iterates over each bit of the character from the most significant bit (MSB) to the least significant bit (LSB). For each bit, it reads a byte from the source file (src) using fgetc. It then modifies the byte by clearing its least significant bit (using byte & ~0x01) and setting it to the current bit of the character (((c >> i) & 0x01)).
+The modified byte is then written to the destination file (dst) using fputc.
+
+Step 8: The write_hidden_msg function is the next function worked on and is responsible for embedding a hidden message into a destination file (dst) by writing it into the least significant bits of the pixel values copied from a source file (src). The function first needed to check if the length of the message exceeds 255 bytes. If so, it returns an error, as the length cannot be stored in a single byte. It then calls write_hidden_byte to write the message length into the first 8 bytes of the destination file. This serves as a header for the hidden message. Next, it iterates over each character in the message and calls write_hidden_byte to encode each character into the least significant bits of pixel values in the destination file. Finally, the function copies any remaining bytes from the source file to the destination file after the message has been written, ensuring that the rest of the file is preserved. Without copying, because its a new destination file, the image would essentially end at where the hidden message stops and the rest of the image wouldn't exist.
+
+Step 9 (Ending write functions): The write_header function writes the PPM (Portable Pixmap) header into the destination file (dst), using the metadata stored in a ppm structure (pi). The function first checks that the height and width of the image are non-zero and that the maximum color value (Maxval) is 255. If any of these conditions are not met, it returns an error. If the checks pass, it formats and writes the PPM header information (magic number, width, height, and Maxval) to the destination file.
+
+Step 10: ReadMsg.c and WriteMsg.c were updated along the way so it is difficult to remember exactly when we worked on these but, they were used to obviously test our functions and rather than compiling two .exe files, we updated our main.c so that we can just create one executable stego.exe and call the executable for both read and write functionality based on the number of inputted parameters.
