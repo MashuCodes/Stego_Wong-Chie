@@ -1,4 +1,5 @@
-// stego.c contains the implementation of functions common to both programs// code here
+// stego.c contains the implementation of functions common to both programs
+// Stego_Wong-Chie_
 #include "stego.h"
 
 int validate_arguments(int argument_count, char **argument_values, int required_arguments, int file_index)
