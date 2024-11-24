@@ -15,20 +15,32 @@ typedef struct
     int width;
     int height;
     int Maxval;
-} ppm;
+} ppm; 
 
 // Function to validate command-line arguments and open the file
 int validate_arguments(int argument_count, char** argument_values, int required_arguments, int file_index);
 
-// Function to write the byte c to the stream (dst) referenced by src
+// Function to write the byte c to the stream referenced by fp
 int write_hidden_byte(FILE *src, FILE *dst, char c);
 
-// Function to read and return length of the hidden message
-unsigned int read_length(FILE *);
+// Function to write the msg message of length to the stream referenced by fp.
+int write_hidden_msg(FILE *src, FILE *dst, int length, char *message);
 
-// Function to read a byte and returns it as a single character
-unsigned int read_byte(FILE *);
+// Writes the ppm header into new file dst
+int write_header(FILE *dst, ppm pi);
+
+// Function to read and return length of the hidden message
+unsigned int read_msg_length(FILE *fp);
+
+// Function to read the hidden message by reading the hidden characters
+void read_hidden_msg(FILE *fp, int length, char *message);
 
 // Function to read and parse the PPM header (magic number, comments, width, height, max value)
 // Returns 0 on success, -1 if there is an error in the format
-int readHeader(struct ppm *pi, FILE *fp);
+int read_header(ppm *pi, FILE *fp);
+
+// Reads message
+int readMsg(int argc, char **argv);
+
+// Writes message
+int writeMsg(int argc, char **argv);
